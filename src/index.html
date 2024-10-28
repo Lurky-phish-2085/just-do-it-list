@@ -6,5 +6,21 @@
     <script src="./index.js" defer></script>
     <title>Just Do It List</title>
   </head>
-  <body></body>
+  <body>
+    <h1>Just Do It List</h1>
+    <input
+      id="item-name-input"
+      type="text"
+      name="item-name-input"
+      placeholder="Enter list item name."
+    />
+    <button id="add-item-button">Add</button>
+    <div id="list-container" style="margin-top: 16px; display: flex; flex-direction: column; gap: 8px;">
+        <article>
+            <button>&#x2713</button>
+            <button>&#10008</button>
+            Item name
+        </article>
+    </div>
+  </body>
 </html>
