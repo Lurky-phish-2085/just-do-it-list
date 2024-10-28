@@ -12,16 +12,14 @@ updateList();
 const addListItem = () => {
   addItem(itemNameInput.value);
   itemNameInput.value = "";
-  itemNameInput.focus();
+  setTimeout(() => itemNameInput.focus(), 80); // prevents the itemNameInput from firing any event.
 };
+addItemButton.addEventListener("click", addListItem);
 itemNameInput.addEventListener("keyup", (event) => {
   if (event.key !== "Enter") {
     return;
   }
 
-  addListItem();
-});
-addItemButton.addEventListener("click", () => {
   addListItem();
 });
 
