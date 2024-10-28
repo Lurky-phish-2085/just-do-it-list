@@ -1,6 +1,7 @@
 const itemNameInput = document.querySelector("#item-name-input");
 const addItemButton = document.querySelector("#add-item-button");
 const listContainer = document.querySelector("#list-container");
+const itemNameInputError = document.querySelector("#item-name-input-error");
 const finishedListContainer = document.querySelector(
   "#finished-list-container"
 );
@@ -10,6 +11,12 @@ const finishedItems = [];
 updateList();
 
 const addListItem = () => {
+  if (itemNameInput.value === "") {
+    itemNameInputError.classList.remove("hidden");
+    return;
+  }
+
+  itemNameInputError.classList.add("hidden");
   addItem(itemNameInput.value);
   itemNameInput.value = "";
   setTimeout(() => itemNameInput.focus(), 80); // prevents the itemNameInput from firing any event.
