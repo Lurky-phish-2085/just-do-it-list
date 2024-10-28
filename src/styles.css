@@ -17,6 +17,11 @@
   margin-top: 8px;
 }
 
+.list-item {
+  display: flex;
+  gap: 8px;
+}
+
 .hidden {
   display: none;
 }

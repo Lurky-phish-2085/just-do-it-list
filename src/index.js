@@ -60,6 +60,7 @@ function updateList() {
     listItemContainer.appendChild(checkButton);
     listItemContainer.appendChild(deleteButton);
     listItemContainer.appendChild(itemValue);
+    listItemContainer.classList.add("list-item");
     listContainer.appendChild(listItemContainer);
 
     checkButton.addEventListener("click", () => {
@@ -89,6 +90,7 @@ function updateList() {
     listItemContainer.appendChild(undoButton);
     listItemContainer.appendChild(deleteButton);
     listItemContainer.appendChild(itemValue);
+    listItemContainer.classList.add("list-item");
     finishedListContainer.appendChild(listItemContainer);
 
     undoButton.addEventListener("click", () => {
