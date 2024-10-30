@@ -102,7 +102,8 @@ function updateList() {
 
   const CHECK_ICON = "\u{2713}";
   const DELETE_ICON = "\u{2715}";
-  const UNDO_ICON = "'\u{21B6}";
+  const UNDO_ICON = "\u{21B6}";
+  const EDIT_ICON = "\u{270E}";
 
   const items = Task.findAll();
   for (let index = items.length - 1; index >= 0; index--) {
@@ -113,12 +114,19 @@ function updateList() {
     actionButton.textContent = item.done ? UNDO_ICON : CHECK_ICON;
     const deleteButton = document.createElement("button");
     deleteButton.textContent = DELETE_ICON;
+    const editButton = document.createElement("button");
+    editButton.textContent = EDIT_ICON;
     const itemValue = document.createElement("span");
 
     listItemContainer.appendChild(actionButton);
     listItemContainer.appendChild(deleteButton);
+    listItemContainer.appendChild(editButton);
     listItemContainer.appendChild(itemValue);
     listItemContainer.classList.add("list-item");
+
+    const editInput = document.createElement("input");
+    editInput.type = "text";
+    editInput.value = item.description;
 
     if (item.done) {
       itemValue.style.textDecoration = "line-through";
@@ -126,6 +134,26 @@ function updateList() {
     } else {
       listContainer.appendChild(listItemContainer);
     }
+
+    const applyEdit = () => {
+      Task.update(item.id, { ...item, description: editInput.value });
+      updateList();
+    };
+    const enableEditMode = () => {
+      itemValue.classList.add("hidden");
+      listItemContainer.insertBefore(editInput, itemValue);
+      editButton.textContent = CHECK_ICON;
+      actionButton.disabled = true;
+      deleteButton.disabled = true;
+      setTimeout(() => editInput.focus(), 80);
+
+      editButton.onclick = applyEdit;
+      editInput.onkeyup = (e) => {
+        if (e.key === "Enter") applyEdit();
+      };
+    };
+
+    editButton.onclick = enableEditMode;
 
     itemValue.textContent = item.description;
     actionButton.addEventListener("click", () => {
