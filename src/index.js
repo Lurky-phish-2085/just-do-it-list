@@ -60,8 +60,6 @@ const finishedListContainer = document.querySelector(
   "#finished-list-container"
 );
 
-// const items = [];
-// const finishedItems = [];
 updateList();
 
 const addListItem = () => {
