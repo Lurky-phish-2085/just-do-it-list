@@ -131,6 +131,7 @@ function updateList() {
     if (item.done) {
       itemValue.style.textDecoration = "line-through";
       finishedListContainer.append(listItemContainer);
+      listItemContainer.removeChild(editButton);
     } else {
       listContainer.appendChild(listItemContainer);
     }
