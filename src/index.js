@@ -106,3 +106,49 @@ function updateList() {
     itemValue.textContent = value;
   }
 }
+
+class Task {
+  static db = [];
+
+  constructor(description, done) {
+    this.description = description;
+    this.done = done;
+  }
+
+  static findAll() {
+    return JSON.parse(JSON.stringify(this.db));
+  }
+
+  static findById(id) {
+    return this.db.filter((task) => task.id === id).at(0);
+  }
+
+  static update(id, newTask) {
+    let taskUpdate = this.findById(id);
+    taskUpdate = { id: id, ...newTask };
+
+    return this.db.splice(this.#findIndexOf(id), 1, taskUpdate);
+  }
+
+  static delete(id) {
+    return this.db.splice(this.#findIndexOf(id), 1);
+  }
+
+  save() {
+    const newTask = JSON.parse(JSON.stringify(this));
+    newTask.id = Task.findAll().length + 1;
+    Task.db.push(newTask);
+  }
+
+  static #findIndexOf(id) {
+    let elementIndex = null;
+
+    this.db.forEach((task, index) => {
+      if (task.id === id) {
+        elementIndex = index;
+      }
+    });
+
+    return elementIndex;
+  }
+}
