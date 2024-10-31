@@ -1,48 +1,63 @@
-class Task {
-  static db = [];
+if (!localStorage.getItem("tasks")) {
+  localStorage.setItem("tasks", JSON.stringify([]));
+}
 
+class Task {
   constructor(description, done) {
     this.description = description;
     this.done = done;
   }
 
   static findAll() {
-    return JSON.parse(JSON.stringify(this.db));
+    return JSON.parse(localStorage.getItem("tasks"));
   }
 
   static findById(id) {
-    return this.db.filter((task) => task.id === id).at(0);
+    const db = this.findAll();
+
+    return db.filter((task) => task.id === id).at(0);
   }
 
   static update(id, newTask) {
+    const db = this.findAll();
     let taskUpdate = this.findById(id);
     taskUpdate = { id: id, ...newTask };
+    const oldTask = db.splice(this.#findIndexOf(id), 1, taskUpdate);
+    localStorage.setItem("tasks", JSON.stringify(db));
 
-    return this.db.splice(this.#findIndexOf(id), 1, taskUpdate);
+    return oldTask;
   }
 
   static delete(id) {
-    return this.db.splice(this.#findIndexOf(id), 1);
+    const db = this.findAll();
+    const oldTask = db.splice(this.#findIndexOf(id), 1);
+    localStorage.setItem("tasks", JSON.stringify(db));
+
+    return oldTask;
   }
 
   static size() {
-    return this.db.length;
+    return this.findAll().length;
   }
 
   static isEmpty() {
-    return this.db.length === 0;
+    return this.findAll().length === 0;
   }
 
   save() {
+    const db = Task.findAll();
     const newTask = JSON.parse(JSON.stringify(this));
-    newTask.id = Task.findAll().length + 1;
-    Task.db.push(newTask);
+    newTask.id = Task.isEmpty() ? 1 : db.at(-1).id + 1;
+    db.push(newTask);
+
+    localStorage.setItem("tasks", JSON.stringify(db));
   }
 
   static #findIndexOf(id) {
+    const db = this.findAll();
     let elementIndex = null;
 
-    this.db.forEach((task, index) => {
+    db.forEach((task, index) => {
       if (task.id === id) {
         elementIndex = index;
       }
