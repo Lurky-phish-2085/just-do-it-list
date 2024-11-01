@@ -1,3 +1,17 @@
+class TaskRepository {
+  static instance() {
+    return JSON.parse(localStorage.getItem("tasks"));
+  }
+
+  static update(db) {
+    if (!(db instanceof Array)) {
+      throw new Error("TaskRepository: supplied db is not an array.");
+    }
+
+    localStorage.setItem("tasks", JSON.stringify(db));
+  }
+}
+
 class Task {
   constructor(description, done) {
     this.description = description;
@@ -5,52 +19,52 @@ class Task {
   }
 
   static findAll() {
-    return JSON.parse(localStorage.getItem("tasks"));
+    return TaskRepository.instance();
   }
 
   static findById(id) {
-    const db = this.findAll();
+    const db = TaskRepository.instance();
 
     return db.filter((task) => task.id === id).at(0);
   }
 
   static update(id, newTask) {
-    const db = this.findAll();
+    const db = TaskRepository.instance();
     let taskUpdate = this.findById(id);
     taskUpdate = { id: id, ...newTask };
     const oldTask = db.splice(this.#findIndexOf(id), 1, taskUpdate);
-    localStorage.setItem("tasks", JSON.stringify(db));
+    TaskRepository.update(db);
 
     return oldTask;
   }
 
   static delete(id) {
-    const db = this.findAll();
+    const db = TaskRepository.instance();
     const oldTask = db.splice(this.#findIndexOf(id), 1);
-    localStorage.setItem("tasks", JSON.stringify(db));
+    TaskRepository.update(db);
 
     return oldTask;
   }
 
   static size() {
-    return this.findAll().length;
+    return TaskRepository.instance().length;
   }
 
   static isEmpty() {
-    return this.findAll().length === 0;
+    return TaskRepository.instance().length === 0;
   }
 
   save() {
-    const db = Task.findAll();
+    const db = TaskRepository.instance();
     const newTask = JSON.parse(JSON.stringify(this));
     newTask.id = Task.isEmpty() ? 1 : db.at(-1).id + 1;
     db.push(newTask);
 
-    localStorage.setItem("tasks", JSON.stringify(db));
+    TaskRepository.update(db);
   }
 
   static #findIndexOf(id) {
-    const db = this.findAll();
+    const db = TaskRepository.instance();
     let elementIndex = null;
 
     db.forEach((task, index) => {
