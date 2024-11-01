@@ -1,4 +1,6 @@
 class TaskRepository {
+  static #listeners = [];
+
   static instance() {
     return JSON.parse(localStorage.getItem("tasks"));
   }
@@ -9,6 +11,21 @@ class TaskRepository {
     }
 
     localStorage.setItem("tasks", JSON.stringify(db));
+    this.#notify();
+  }
+
+  static addListener(callback) {
+    this.#listeners.push(callback);
+  }
+
+  static #notify() {
+    if (this.#listeners.length === 0) {
+      return;
+    }
+
+    for (const listener of this.#listeners) {
+      listener();
+    }
   }
 }
 
@@ -93,6 +110,7 @@ function init() {
   }
 
   updateList();
+  TaskRepository.addListener(updateList);
 
   const addListItem = () => {
     if (itemNameInput.value === "") {
@@ -119,7 +137,6 @@ function init() {
 function addItem(itemName) {
   const task = new Task(itemName, false);
   task.save();
-  updateList();
 }
 
 function updateList() {
@@ -172,7 +189,6 @@ function updateList() {
 
     const applyEdit = () => {
       Task.update(item.id, { ...item, description: editInput.value });
-      updateList();
     };
     const enableEditMode = () => {
       itemValue.classList.add("hidden");
@@ -193,11 +209,9 @@ function updateList() {
     itemValue.textContent = item.description;
     actionButton.addEventListener("click", () => {
       Task.update(item.id, { ...item, done: !item.done });
-      updateList();
     });
     deleteButton.addEventListener("click", () => {
       Task.delete(item.id);
-      updateList();
     });
   }
 }
