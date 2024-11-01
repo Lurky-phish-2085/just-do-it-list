@@ -151,67 +151,69 @@ function updateList() {
     return;
   }
 
+  const tasks = Task.findAll();
+  for (let index = tasks.length - 1; index >= 0; index--) {
+    const taskElement = createTaskElement(tasks[index]);
+
+    if (tasks[index].done) {
+      finishedListContainer.appendChild(taskElement);
+      continue;
+    }
+
+    listContainer.appendChild(taskElement);
+  }
+}
+
+function createTaskElement(task) {
   const CHECK_ICON = "\u{2713}";
   const DELETE_ICON = "\u{2715}";
   const UNDO_ICON = "\u{21B6}";
   const EDIT_ICON = "\u{270E}";
 
-  const items = Task.findAll();
-  for (let index = items.length - 1; index >= 0; index--) {
-    const item = items[index];
+  const taskElement = document.createElement("article");
+  taskElement.classList.add("list-item");
 
-    const listItemContainer = document.createElement("article");
-    const actionButton = document.createElement("button");
-    actionButton.textContent = item.done ? UNDO_ICON : CHECK_ICON;
-    const deleteButton = document.createElement("button");
-    deleteButton.textContent = DELETE_ICON;
-    const editButton = document.createElement("button");
-    editButton.textContent = EDIT_ICON;
-    const itemValue = document.createElement("span");
+  const actionButton = document.createElement("button");
+  const deleteButton = document.createElement("button");
+  const editButton = document.createElement("button");
+  const taskDescription = document.createElement("span");
+  const editInput = document.createElement("input");
+  taskElement.appendChild(actionButton);
+  taskElement.appendChild(deleteButton);
+  if (!task.done) taskElement.appendChild(editButton);
+  taskElement.appendChild(taskDescription);
 
-    listItemContainer.appendChild(actionButton);
-    listItemContainer.appendChild(deleteButton);
-    listItemContainer.appendChild(editButton);
-    listItemContainer.appendChild(itemValue);
-    listItemContainer.classList.add("list-item");
+  actionButton.textContent = task.done ? UNDO_ICON : CHECK_ICON;
+  deleteButton.textContent = DELETE_ICON;
+  editButton.textContent = EDIT_ICON;
+  editInput.value = task.description;
+  taskDescription.textContent = task.description;
+  taskDescription.style.textDecoration = task.done ? "line-through" : "none";
 
-    const editInput = document.createElement("input");
-    editInput.type = "text";
-    editInput.value = item.description;
+  editButton.addEventListener("click", enableEditMode);
+  actionButton.addEventListener("click", () => {
+    Task.update(task.id, { ...task, done: !task.done });
+  });
+  deleteButton.addEventListener("click", () => {
+    Task.delete(task.id);
+  });
 
-    if (item.done) {
-      itemValue.style.textDecoration = "line-through";
-      finishedListContainer.append(listItemContainer);
-      listItemContainer.removeChild(editButton);
-    } else {
-      listContainer.appendChild(listItemContainer);
-    }
-
-    const applyEdit = () => {
-      Task.update(item.id, { ...item, description: editInput.value });
-    };
-    const enableEditMode = () => {
-      itemValue.classList.add("hidden");
-      listItemContainer.insertBefore(editInput, itemValue);
-      editButton.textContent = CHECK_ICON;
-      actionButton.disabled = true;
-      deleteButton.disabled = true;
-      setTimeout(() => editInput.focus(), 80);
-
-      editButton.onclick = applyEdit;
-      editInput.onkeyup = (e) => {
-        if (e.key === "Enter") applyEdit();
-      };
-    };
-
-    editButton.onclick = enableEditMode;
-
-    itemValue.textContent = item.description;
-    actionButton.addEventListener("click", () => {
-      Task.update(item.id, { ...item, done: !item.done });
-    });
-    deleteButton.addEventListener("click", () => {
-      Task.delete(item.id);
-    });
+  function applyEdit() {
+    Task.update(task.id, { ...task, description: editInput.value });
   }
+  function enableEditMode() {
+    taskDescription.classList.add("hidden");
+    taskElement.insertBefore(editInput, taskDescription);
+    editButton.textContent = CHECK_ICON;
+    actionButton.disabled = true;
+    deleteButton.disabled = true;
+    setTimeout(() => editInput.focus(), 80);
+
+    editButton.onclick = applyEdit;
+    editInput.onkeyup = (e) => {
+      if (e.key === "Enter") applyEdit();
+    };
+  }
+
+  return taskElement;
 }
