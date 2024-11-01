@@ -1,7 +1,3 @@
-if (!localStorage.getItem("tasks")) {
-  localStorage.setItem("tasks", JSON.stringify([]));
-}
-
 class Task {
   constructor(description, done) {
     this.description = description;
@@ -75,27 +71,36 @@ const finishedListContainer = document.querySelector(
   "#finished-list-container"
 );
 
-updateList();
+init();
 
-const addListItem = () => {
-  if (itemNameInput.value === "") {
-    itemNameInputError.classList.remove("hidden");
-    return;
+function init() {
+  if (!localStorage.getItem("tasks")) {
+    localStorage.setItem("tasks", JSON.stringify([]));
   }
 
-  itemNameInputError.classList.add("hidden");
-  addItem(itemNameInput.value);
-  itemNameInput.value = "";
-  setTimeout(() => itemNameInput.focus(), 80); // prevents the itemNameInput from firing any event.
-};
-addItemButton.addEventListener("click", addListItem);
-itemNameInput.addEventListener("keyup", (event) => {
-  if (event.key !== "Enter") {
-    return;
-  }
+  updateList();
 
-  addListItem();
-});
+  const addListItem = () => {
+    if (itemNameInput.value === "") {
+      itemNameInputError.classList.remove("hidden");
+      return;
+    }
+
+    itemNameInputError.classList.add("hidden");
+    addItem(itemNameInput.value);
+    itemNameInput.value = "";
+    setTimeout(() => itemNameInput.focus(), 80); // prevents the itemNameInput from firing any event.
+  };
+
+  addItemButton.addEventListener("click", addListItem);
+  itemNameInput.addEventListener("keyup", (event) => {
+    if (event.key !== "Enter") {
+      return;
+    }
+
+    addListItem();
+  });
+}
 
 function addItem(itemName) {
   const task = new Task(itemName, false);
