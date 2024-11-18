@@ -2,26 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./styles.css" />
-    <script src="./index.js" defer></script>
     <title>Just Do It List</title>
   </head>
   <body>
-    <h1>Just Do It List</h1>
-    <div class="input-text-bar" style="margin-bottom: 16px">
-      <input
-        id="item-name-input"
-        type="text"
-        name="item-name-input"
-        placeholder="Enter list item name."
-      />
-      <button id="add-item-button">Add</button>
-      <small id="item-name-input-error" class="error hidden"
-        >Enter a valid value.</small
-      >
-    </div>
-    <div id="list-container" class="list-container"></div>
-    <div id="finished-list-container" class="list-container"></div>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
