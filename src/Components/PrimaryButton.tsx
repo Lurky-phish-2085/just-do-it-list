@@ -1,12 +1,12 @@
-import { MouseEvent } from "react";
+import { MouseEvent, ReactNode } from "react";
 
 type PrimaryButtonProps = {
-  children: string;
-  onClick: (e: MouseEvent<HTMLButtonElement>) => void;
+  children?: ReactNode;
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   disabled?: boolean;
 };
 
-export default function PrimaryButton({
+function PrimaryButton({
   children,
   onClick,
   disabled = false,
@@ -17,3 +17,5 @@ export default function PrimaryButton({
     </button>
   );
 }
+
+export default PrimaryButton;

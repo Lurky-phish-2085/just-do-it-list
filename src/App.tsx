@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import Dashboard from "./Pages/Dashboard";
 
-export default function App() {
+function App() {
   const divRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -22,3 +22,5 @@ export default function App() {
     </div>
   );
 }
+
+export default App;
