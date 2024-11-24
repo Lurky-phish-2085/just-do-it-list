@@ -1,21 +1,21 @@
-import Task from "./Task";
+import TaskModel from "./TaskModel";
 
 const TASK_REPOSITORY_ITEM = "tasks";
 
 class TaskRepository {
-  public static instance(): Task[] {
-    const tasks: Task[] = JSON.parse(
+  public static instance(): TaskModel[] {
+    const tasks: TaskModel[] = JSON.parse(
       localStorage.getItem(TASK_REPOSITORY_ITEM) || "[]"
     );
 
     return tasks;
   }
 
-  public static update(db: Task[]): void {
+  public static update(db: TaskModel[]): void {
     localStorage.setItem(TASK_REPOSITORY_ITEM, JSON.stringify(db));
   }
 
-  public static initialize(initialData: Task[] = []): void {
+  public static initialize(initialData: TaskModel[] = []): void {
     const repoExist = localStorage.getItem(TASK_REPOSITORY_ITEM);
 
     if (repoExist) {

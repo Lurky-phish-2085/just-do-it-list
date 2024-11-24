@@ -1,6 +1,6 @@
 import TaskRepository from "./TaskRepository";
 
-class Task {
+class TaskModel {
   public id?: number | null;
   public description: string;
   public done: boolean;
@@ -15,36 +15,40 @@ class Task {
     this.id = id;
   }
 
-  public static findAll(): Task[] {
+  public static findAll(): TaskModel[] {
     return TaskRepository.instance();
   }
 
-  public static findById(id: number): Task {
-    const db: Task[] = TaskRepository.instance();
+  public static findById(id: number): TaskModel {
+    const db: TaskModel[] = TaskRepository.instance();
 
     return db.filter((task) => task.id === id)[0];
   }
 
-  public static update(id: number, taskUpdate: Task): Task {
+  public static update(id: number, taskUpdate: TaskModel): TaskModel {
     if (!this.findById(id)) {
       throw new Error(`Task with id: ${id} not found.`);
     }
 
-    const db: Task[] = TaskRepository.instance();
+    const db: TaskModel[] = TaskRepository.instance();
     taskUpdate.id = id;
-    const oldTask: Task = db.splice(this.findIndexOf(id), 1, taskUpdate)[0];
+    const oldTask: TaskModel = db.splice(
+      this.findIndexOf(id),
+      1,
+      taskUpdate
+    )[0];
     TaskRepository.update(db);
 
     return oldTask;
   }
 
-  public static delete(id: number): Task {
+  public static delete(id: number): TaskModel {
     if (!this.findById(id)) {
       throw new Error(`Task with id: ${id} not found.`);
     }
 
-    const db: Task[] = TaskRepository.instance();
-    const deletedTask: Task = db.splice(this.findIndexOf(id), 1)[0];
+    const db: TaskModel[] = TaskRepository.instance();
+    const deletedTask: TaskModel = db.splice(this.findIndexOf(id), 1)[0];
     TaskRepository.update(db);
 
     return deletedTask;
@@ -59,12 +63,12 @@ class Task {
   }
 
   public save() {
-    const db: Task[] = TaskRepository.instance();
-    const newTask: Task = JSON.parse(JSON.stringify(this));
+    const db: TaskModel[] = TaskRepository.instance();
+    const newTask: TaskModel = JSON.parse(JSON.stringify(this));
     newTask.id = 1;
 
-    if (!Task.isEmpty()) {
-      const lastTask: Task = db[db.length - 1];
+    if (!TaskModel.isEmpty()) {
+      const lastTask: TaskModel = db[db.length - 1];
       newTask.id = lastTask.id! + 1;
     }
 
@@ -74,7 +78,7 @@ class Task {
   }
 
   private static findIndexOf(id: number): number {
-    const db: Task[] = TaskRepository.instance();
+    const db: TaskModel[] = TaskRepository.instance();
     let elementIndex: number | null = null;
 
     db.forEach((task, index) => {
@@ -83,8 +87,8 @@ class Task {
       }
     });
 
-    return elementIndex || -1;
+    return elementIndex ?? -1;
   }
 }
 
-export default Task;
+export default TaskModel;
