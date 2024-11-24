@@ -2,44 +2,73 @@ import { ChangeEvent, KeyboardEvent, useState } from "react";
 import { AiFillDelete, AiOutlineCheck } from "react-icons/ai";
 import { FaEdit } from "react-icons/fa";
 import PrimaryButton from "./PrimaryButton";
+import TaskModel from "../data/TaskModel";
 
 type TaskProps = {
-  key: number;
-  name: string;
+  key?: number;
+  task: TaskModel;
+  onEdit?: (task: TaskModel) => void;
+  onDelete?: (task: TaskModel) => void;
 };
 
-function Task({ name }: TaskProps) {
-  const [done, setDone] = useState(false);
+function TaskComponent({ task, onEdit, onDelete }: TaskProps) {
   const [editing, setEditing] = useState(false);
-  const [taskName, setTaskName] = useState(name);
-  const [newTaskName, setNewTaskName] = useState(name);
+  const [newDescription, setNewDescription] = useState(task.description);
 
-  const handleCheck = (e: ChangeEvent<HTMLInputElement>) => {
-    setDone(e.target.checked);
+  const handleCheck = () => {
+    task.done = !task.done;
+    if (onEdit) onEdit(task);
   };
   const handleEditClick = () => {
     setEditing((prevState) => {
       return !prevState;
     });
 
-    if (editing) setTaskName(newTaskName);
+    if (editing) {
+      task.description = newDescription;
+      if (onEdit) onEdit(task);
+    }
   };
   const handleEditInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setNewTaskName(e.target.value);
+    setNewDescription(e.target.value);
   };
   const handleEditInputKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") handleEditClick();
+    switch (e.key) {
+      case "Enter":
+        handleEditClick();
+        break;
+
+      case "Escape":
+        setEditing(false);
+        setNewDescription(task.description);
+        break;
+
+      default:
+        break;
+    }
+  };
+  const handleDeleteClick = () => {
+    if (onDelete) onDelete(task);
   };
 
   return (
     <>
       <article>
         <nav>
-          <input
-            onChange={handleCheck}
-            style={{ width: "42px", height: "42px" }}
-            type="checkbox"
-          />
+          {task.done ? (
+            <input
+              onChange={handleCheck}
+              style={{ width: "42px", height: "42px" }}
+              type="checkbox"
+              checked
+            />
+          ) : (
+            <input
+              onChange={handleCheck}
+              style={{ width: "42px", height: "42px" }}
+              type="checkbox"
+            />
+          )}
           {editing ? (
             <input
               onKeyUp={handleEditInputKeyUp}
@@ -50,20 +79,20 @@ function Task({ name }: TaskProps) {
                 textAlign: "center",
               }}
               type="text"
-              value={newTaskName}
+              value={newDescription}
               autoFocus
               required
             />
           ) : (
-            <h3 style={done ? { textDecoration: "line-through" } : {}}>
-              {taskName}
+            <h3 style={task.done ? { textDecoration: "line-through" } : {}}>
+              {task.description}
             </h3>
           )}
           <div style={{ display: "flex", gap: "8px" }}>
             <PrimaryButton onClick={handleEditClick}>
               {editing ? <AiOutlineCheck /> : <FaEdit />}
             </PrimaryButton>
-            <PrimaryButton>
+            <PrimaryButton onClick={handleDeleteClick}>
               <AiFillDelete />
             </PrimaryButton>
           </div>
@@ -73,4 +102,4 @@ function Task({ name }: TaskProps) {
   );
 }
 
-export default Task;
+export default TaskComponent;
