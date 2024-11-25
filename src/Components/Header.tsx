@@ -1,6 +1,10 @@
 import TextButton from "./TextButton";
 
-function Header() {
+type HeaderProps = {
+  onAbout: () => void;
+};
+
+function Header({ onAbout }: HeaderProps) {
   return (
     <>
       <header style={{ marginBottom: "42px" }}>
@@ -14,7 +18,7 @@ function Header() {
           <div>
             <ul>
               <li>
-                <TextButton>About</TextButton>
+                <TextButton onClick={onAbout}>About</TextButton>
               </li>
             </ul>
           </div>

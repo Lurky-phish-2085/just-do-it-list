@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import Dashboard from "./Pages/Dashboard";
+import Index from "./Pages/Index";
 
 function App() {
   const divRef = useRef<HTMLDivElement>(null);
@@ -17,8 +17,8 @@ function App() {
   }, []);
 
   return (
-    <div ref={divRef} className="container">
-      <Dashboard />
+    <div ref={divRef} className="container" style={{ padding: "16px" }}>
+      <Index />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode, useState } from "react";
+import { CSSProperties, ReactNode } from "react";
 import { AiOutlineInfoCircle, AiOutlineWarning } from "react-icons/ai";
 import { BiErrorAlt } from "react-icons/bi";
 import DialogTypes from "./enums/dialogTypes";
