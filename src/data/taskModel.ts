@@ -1,4 +1,4 @@
-import TaskRepository from "./TaskRepository";
+import TaskRepository from "./taskRepository";
 
 class TaskModel {
   public id?: number | null;
@@ -7,7 +7,7 @@ class TaskModel {
 
   public constructor(
     description: string,
-    done: boolean,
+    done: boolean = false,
     id: number | null = null
   ) {
     this.description = description;

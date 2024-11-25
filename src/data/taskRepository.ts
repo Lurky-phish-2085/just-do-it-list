@@ -1,4 +1,4 @@
-import TaskModel from "./TaskModel";
+import TaskModel from "./taskModel";
 
 const TASK_REPOSITORY_ITEM = "tasks";
 
@@ -33,14 +33,12 @@ class TaskRepository {
     this.notify();
   }
 
-  public static addListener(listener: () => void) {
+  public static addListener(listener: (tasks: TaskModel[]) => void) {
     this.listeners.push(listener);
-    console.log("listeners size: " + this.listeners.length);
   }
 
-  public static removeListener(listener: () => void) {
+  public static removeListener(listener: (tasks: TaskModel[]) => void) {
     this.listeners.splice(this.listeners.indexOf(listener), 1);
-    console.log("listeners size: " + this.listeners.length);
   }
 
   private static notify() {
@@ -49,7 +47,7 @@ class TaskRepository {
     }
 
     for (const listener of this.listeners) {
-      listener();
+      listener(this.instance());
     }
   }
 }
