@@ -2,7 +2,7 @@ import { ChangeEvent, KeyboardEvent, useState } from "react";
 import { AiFillDelete, AiOutlineCheck } from "react-icons/ai";
 import { FaEdit } from "react-icons/fa";
 import PrimaryButton from "./PrimaryButton";
-import TaskModel from "../data/TaskModel";
+import TaskModel from "../data/taskModel";
 
 type TaskProps = {
   key?: number;

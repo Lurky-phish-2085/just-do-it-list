@@ -1,5 +1,5 @@
 import TaskComponent from "./Task";
-import TaskModel from "../data/TaskModel";
+import TaskModel from "../data/taskModel";
 
 type TaskListProps = {
   tasks: TaskModel[];
