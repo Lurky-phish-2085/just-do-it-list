@@ -9,6 +9,7 @@ type DialogProps = {
   children: ReactNode;
   type: DialogTypes;
   acceptButtonText?: string;
+  open: boolean;
   onAccept: () => void;
   onCancel?: () => void;
 };
@@ -17,6 +18,7 @@ function Dialog({
   children,
   type,
   acceptButtonText = "Confirm",
+  open = false,
   onAccept,
   onCancel,
 }: DialogProps) {
@@ -54,6 +56,10 @@ function Dialog({
   const handleOnCancel = () => {
     if (onCancel) onCancel();
   };
+
+  if (!open) {
+    return <></>;
+  }
 
   return (
     <>
