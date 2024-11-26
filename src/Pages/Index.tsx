@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import { BsGithub } from "react-icons/bs";
-import { RiGitRepositoryLine } from "react-icons/ri";
-import Dialog from "../Components/Dialog";
-import DialogTypes from "../Components/enums/dialogTypes";
+import AboutDialog from "../Components/AboutDialog";
+import DeleteDialog from "../Components/DeleteDialog";
 import Header from "../Components/Header";
 import TaskInput from "../Components/TaskInput";
 import TaskList from "../Components/TaskList";
@@ -32,7 +30,6 @@ function Index() {
   };
   const handleOnDelete = (task: TaskModel) => {
     setDeleteDialogOpen(true);
-    console.log("DILog open");
     setTaskToDelete(task);
   };
   const handleDeleteConfirmation = () => {
@@ -55,61 +52,16 @@ function Index() {
           onEdit={handleOnEdit}
           onDelete={handleOnDelete}
         />
-      </main>
-      {aboutDialogOpen && (
-        <Dialog
-          type={DialogTypes.INFO}
+        <AboutDialog
+          open={aboutDialogOpen}
           onAccept={() => setAboutDialogOpen(false)}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <h1 style={{ margin: 0 }}>Just Do It</h1>
-            <p>just another to do list</p>
-            <p>Yes, another to do list app to try React for the first time.</p>
-            <div>
-              <RiGitRepositoryLine />
-              <a
-                style={{ marginLeft: 8 }}
-                href="https://github.com/Lurky-phish-2085/just-do-it-list"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Github Repository
-              </a>
-            </div>
-            <div>
-              <BsGithub />
-              <a
-                style={{ marginLeft: 8 }}
-                href="https://github.com/Lurky-phish-2085"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Check out my Github profile!
-              </a>
-            </div>
-          </div>
-        </Dialog>
-      )}
-      {deleteDialogOpen && (
-        <Dialog
-          type={DialogTypes.WARNING}
-          acceptButtonText="Delete"
+        />
+        <DeleteDialog
+          open={deleteDialogOpen}
           onAccept={handleDeleteConfirmation}
           onCancel={handleDeleteCancellation}
-        >
-          <p>
-            Are you sure you want to permanently delete this task? Once deleted,
-            it cannot be recovered.
-          </p>
-        </Dialog>
-      )}
+        />
+      </main>
     </>
   );
 }
