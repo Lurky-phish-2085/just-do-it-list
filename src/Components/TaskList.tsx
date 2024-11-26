@@ -1,5 +1,5 @@
-import TaskComponent from "./Task";
 import TaskModel from "../data/taskModel";
+import TaskComponent from "./Task";
 
 type TaskListProps = {
   tasks: TaskModel[];
@@ -10,16 +10,18 @@ type TaskListProps = {
 function TaskList({ tasks, onEdit, onDelete }: TaskListProps) {
   return (
     <>
-      {tasks.map((task, index) => {
-        return (
-          <TaskComponent
-            key={index}
-            task={task}
-            onEdit={onEdit}
-            onDelete={onDelete}
-          />
-        );
-      })}
+      <section>
+        {tasks.map((task, index) => {
+          return (
+            <TaskComponent
+              key={index}
+              task={task}
+              onEdit={onEdit}
+              onDelete={onDelete}
+            />
+          );
+        })}
+      </section>
     </>
   );
 }
