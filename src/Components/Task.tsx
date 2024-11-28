@@ -55,20 +55,12 @@ function TaskComponent({ task, onEdit, onDelete }: TaskProps) {
     <>
       <article>
         <nav>
-          {task.done ? (
-            <input
-              onChange={handleCheck}
-              style={{ width: "42px", height: "42px" }}
-              type="checkbox"
-              checked
-            />
-          ) : (
-            <input
-              onChange={handleCheck}
-              style={{ width: "42px", height: "42px" }}
-              type="checkbox"
-            />
-          )}
+          <input
+            onChange={handleCheck}
+            style={{ width: "42px", height: "42px" }}
+            type="checkbox"
+            checked={task.done}
+          />
           {editing ? (
             <input
               onKeyUp={handleEditInputKeyUp}

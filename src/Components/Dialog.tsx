@@ -57,13 +57,9 @@ function Dialog({
     if (onCancel) onCancel();
   };
 
-  if (!open) {
-    return <></>;
-  }
-
   return (
     <>
-      <dialog open>
+      <dialog open={open}>
         <article>
           <div style={{ flexDirection: "row", display: "flex", gap: "8px" }}>
             {headerIcon}
