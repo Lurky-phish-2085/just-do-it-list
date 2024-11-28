@@ -5,12 +5,15 @@ type HeaderProps = {
 };
 
 function Header({ onAbout }: HeaderProps) {
+  // @ts-ignore
+  const indexUrl = __MY_CONFIG__.INDEX_URL;
+
   return (
     <>
       <header style={{ marginBottom: "42px" }}>
         <nav>
           <hgroup>
-            <a href="/" style={{ textDecoration: "none" }}>
+            <a href={indexUrl} style={{ textDecoration: "none" }}>
               <h1 style={{ margin: 0 }}>Just Do It</h1>
             </a>
             <p>just another to do list</p>
