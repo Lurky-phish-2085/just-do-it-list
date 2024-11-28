@@ -20,9 +20,7 @@ function TaskComponent({ task, onEdit, onDelete }: TaskProps) {
     if (onEdit) onEdit(task);
   };
   const handleEditClick = () => {
-    setEditing((prevState) => {
-      return !prevState;
-    });
+    setEditing((prevState) => !prevState);
 
     if (editing) {
       task.description = newDescription;
