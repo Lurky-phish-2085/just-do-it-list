@@ -1,26 +1,14 @@
-import { CSSProperties, MouseEvent, ReactNode } from "react";
+import { ButtonHTMLAttributes } from "react";
 
-type TextButtonProps = {
-  children?: ReactNode;
-  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
-  disabled?: boolean;
-  style?: CSSProperties;
-};
-
-function TextButton({
-  children,
-  onClick,
-  disabled = false,
-  style = { border: "none" },
-}: TextButtonProps) {
+function TextButton({ ...props }: ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
+      {...props}
       className="outline"
-      style={style}
-      onClick={onClick}
-      disabled={disabled}
+      type="button"
+      style={{ border: "none" }}
     >
-      {children}
+      {props.children}
     </button>
   );
 }

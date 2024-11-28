@@ -1,21 +1,9 @@
-import { CSSProperties, MouseEvent, ReactNode } from "react";
+import { ButtonHTMLAttributes } from "react";
 
-type PrimaryButtonProps = {
-  children?: ReactNode;
-  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
-  disabled?: boolean;
-  style?: CSSProperties;
-};
-
-function PrimaryButton({
-  children,
-  onClick,
-  disabled = false,
-  style = {},
-}: PrimaryButtonProps) {
+function PrimaryButton({ ...props }: ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
-    <button style={style} onClick={onClick} disabled={disabled}>
-      {children}
+    <button type="button" {...props} className="">
+      {props.children}
     </button>
   );
 }
