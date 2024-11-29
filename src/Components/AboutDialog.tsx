@@ -2,6 +2,7 @@ import { BsGithub } from "react-icons/bs";
 import { RiGitRepositoryLine } from "react-icons/ri";
 import Dialog from "./Dialog";
 import DialogTypes from "./enums/dialogTypes";
+import Logo from "./Logo";
 
 type AboutDialogProps = {
   open: boolean;
@@ -20,8 +21,7 @@ function AboutDialog({ open, onAccept }: AboutDialogProps) {
             alignItems: "center",
           }}
         >
-          <h1 style={{ margin: 0 }}>Just Do It</h1>
-          <p>just another to do list</p>
+          <Logo />
           <p>Yes, another to do list app to try React for the first time.</p>
           <div>
             <RiGitRepositoryLine />
