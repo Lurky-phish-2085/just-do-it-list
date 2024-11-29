@@ -1,25 +1,34 @@
+import { useRef, useState } from "react";
+import AboutDialog from "./AboutDialog";
 import Logo from "./Logo";
 import TextButton from "./TextButton";
 
-type HeaderProps = {
-  onAbout: () => void;
-};
+function Header() {
+  const [aboutDialogOpen, setAboutDialogOpen] = useState(false);
+  const headerRef = useRef<HTMLHeadElement | null>(null);
 
-function Header({ onAbout }: HeaderProps) {
+  const handleOnAboutOpen = () => {
+    setAboutDialogOpen(true);
+  };
+  const handleOnAboutClose = () => {
+    setAboutDialogOpen(false);
+  };
+
   return (
     <>
-      <header style={{ marginBottom: "42px" }}>
+      <header ref={headerRef} style={{ marginBottom: "42px" }}>
         <nav>
           <Logo />
           <div>
             <ul>
               <li>
-                <TextButton onClick={onAbout}>About</TextButton>
+                <TextButton onClick={handleOnAboutOpen}>About</TextButton>
               </li>
             </ul>
           </div>
         </nav>
       </header>
+      <AboutDialog open={aboutDialogOpen} onAccept={handleOnAboutClose} />
     </>
   );
 }

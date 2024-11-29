@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import AboutDialog from "../Components/AboutDialog";
 import DeleteDialog from "../Components/DeleteDialog";
 import Header from "../Components/Header";
 import TaskInput from "../Components/TaskInput";
@@ -10,7 +9,6 @@ import TaskRepository from "../data/taskRepository";
 function Index() {
   const [tasks, setTasks] = useState(TaskModel.findAll());
   const [taskToDelete, setTaskToDelete] = useState<TaskModel | null>(null);
-  const [aboutDialogOpen, setAboutDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   useEffect(() => {
@@ -44,17 +42,13 @@ function Index() {
 
   return (
     <>
-      <Header onAbout={() => setAboutDialogOpen(true)} />
+      <Header />
       <main>
         <TaskInput onAdd={handleOnAdd} />
         <TaskList
           tasks={tasks}
           onEdit={handleOnEdit}
           onDelete={handleOnDelete}
-        />
-        <AboutDialog
-          open={aboutDialogOpen}
-          onAccept={() => setAboutDialogOpen(false)}
         />
         <DeleteDialog
           open={deleteDialogOpen}
