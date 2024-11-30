@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import Index from "./Pages/Index";
+import { ThemeProvider } from "./contexts/ThemeContext";
 
 function App() {
   const divRef = useRef<HTMLDivElement>(null);
@@ -17,9 +18,11 @@ function App() {
   }, []);
 
   return (
-    <div ref={divRef} className="container" style={{ padding: "16px" }}>
-      <Index />
-    </div>
+    <ThemeProvider>
+      <div ref={divRef} className="container" style={{ padding: "16px" }}>
+        <Index />
+      </div>
+    </ThemeProvider>
   );
 }
 

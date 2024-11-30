@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import AboutDialog from "./AboutDialog";
 import Logo from "./Logo";
 import TextButton from "./TextButton";
+import ColorSchemeSwitcher from "./ColorSchemeSwitcher";
 
 function Header() {
   const [aboutDialogOpen, setAboutDialogOpen] = useState(false);
@@ -21,6 +22,9 @@ function Header() {
           <Logo />
           <div>
             <ul>
+              <li>
+                <ColorSchemeSwitcher />
+              </li>
               <li>
                 <TextButton onClick={handleOnAboutOpen}>About</TextButton>
               </li>
