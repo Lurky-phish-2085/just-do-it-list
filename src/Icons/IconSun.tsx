@@ -1,7 +1,7 @@
-import React from "react";
+import { SVGProps } from "react";
 
 // Source Tabler Icons: https://tablericons.com/
-const IconSun = (props) => {
+const IconSun = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

@@ -1,15 +1,15 @@
-import React from "react";
+import { AnchorHTMLAttributes, MouseEvent } from "react";
 import { useTheme } from "../contexts/ThemeContext";
-import IconMoon from "../icons/IconMoon";
-import IconSun from "../icons/IconSun";
+import IconMoon from "../Icons/IconMoon";
+import IconSun from "../Icons/IconSun";
 
-export default function ColorSchemeSwitcher(props) {
+function ColorSchemeSwitcher(props: AnchorHTMLAttributes<HTMLAnchorElement>) {
   const { switchTheme, theme } = useTheme();
   const nextTheme = theme === "dark" ? "light" : "dark";
   const nextThemeLabel =
     theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode";
 
-  const handleSwitchTheme = (event) => {
+  const handleSwitchTheme = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     switchTheme();
   };
@@ -25,3 +25,5 @@ export default function ColorSchemeSwitcher(props) {
     </a>
   );
 }
+
+export default ColorSchemeSwitcher;
