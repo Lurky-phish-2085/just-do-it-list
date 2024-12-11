@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode } from "react";
+import { CSSProperties, ReactNode, useEffect } from "react";
 import { AiOutlineInfoCircle, AiOutlineWarning } from "react-icons/ai";
 import { BiErrorAlt } from "react-icons/bi";
 import DialogTypes from "./enums/dialogTypes";
@@ -44,11 +44,22 @@ function Dialog({
     default:
       break;
   }
+
   const headerText = type;
   const acceptButtonStyle: CSSProperties =
     type === DialogTypes.WARNING
       ? { backgroundColor: "red", borderColor: "crimson" }
       : {};
+
+  useEffect(() => {
+    const htmlTag = document.querySelector("html");
+
+    if (open) {
+      htmlTag?.classList.add("modal-is-open");
+    } else {
+      htmlTag?.classList.remove("modal-is-open");
+    }
+  }, [open]);
 
   const handleOnAccept = () => {
     onAccept();
