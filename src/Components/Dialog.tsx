@@ -1,4 +1,5 @@
-import { CSSProperties, ReactNode, useEffect } from "react";
+import { CSSProperties, ReactElement, ReactNode, useEffect } from "react";
+import { IconType } from "react-icons";
 import { AiOutlineInfoCircle, AiOutlineWarning } from "react-icons/ai";
 import { BiErrorAlt } from "react-icons/bi";
 import DialogTypes from "./enums/dialogTypes";
@@ -22,7 +23,7 @@ function Dialog({
   onAccept,
   onCancel,
 }: DialogProps) {
-  let headerIcon: ReactNode = <AiOutlineInfoCircle />;
+  let headerIcon: ReactElement<IconType> = <AiOutlineInfoCircle />;
   const headerIconStyle: CSSProperties = { width: 36, height: 36 };
   switch (type) {
     case DialogTypes.INFO:
